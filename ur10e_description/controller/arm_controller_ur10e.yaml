@@ -1,0 +1,30 @@
+ur10e:
+
+  joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 1000 
+
+  shoulder_pan_joint_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: shoulder_pan_joint
+
+  shoulder_lift_joint_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: shoulder_lift_joint
+
+  elbow_joint_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: elbow_joint
+
+  wrist_1_joint_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wrist_1_joint
+    
+  wrist_2_joint_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wrist_2_joint
+
+  wrist_3_joint_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wrist_3_joint
+

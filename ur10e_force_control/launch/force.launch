@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="ur10e_force_control" type="force_pub" name="force_pub"/>
+    <node pkg="ur10e_force_control" type="force_control" name="force_control"/>
+</launch>

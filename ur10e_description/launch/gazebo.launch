@@ -1,0 +1,58 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>
+    </include>
+
+  <node
+    name="spawn_model"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-file $(find ur10e_description)/urdf/ur10e.urdf -urdf  -model ur10e
+    -J shoulder_pan_joint 0
+    -J shoulder_lift_joint 0
+    -J elbow_joint 0
+    -J wrist_1_joint 0
+    -J wrist_2_joint 0
+    -J wrist_3_joint 0
+    "
+    output="screen" />
+  <node
+    name="fake_joint_calibration"
+    pkg="rostopic"
+    type="rostopic"
+    args="pub /calibrated std_msgs/Bool true" />
+
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find ur10e_description)/config/ur10e.rviz" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="use_gui" value="False"/>
+  </node>
+
+  <param name="robot_description" command="$(find xacro)/xacro $(find ur10e_description)/urdf/ur10e.urdf " />
+
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="true" output="screen">
+    <remap from="/joint_states" to="/ur10e/joint_states" />
+  </node>
+
+  <rosparam file="$(find ur10e_description)/controller/arm_controller_ur10e.yaml" command="load"/>
+
+
+  <node name="controller_spawner"
+      pkg="controller_manager" 
+      type="spawner" 
+      respawn="false"
+    	output="screen" 
+      ns="/ur10e" 
+      args="joint_state_controller
+      shoulder_pan_joint_effort_controller
+      shoulder_lift_joint_effort_controller
+      elbow_joint_effort_controller
+      wrist_1_joint_effort_controller
+      wrist_2_joint_effort_controller
+      wrist_3_joint_effort_controller"/>
+
+
+</launch>

@@ -1,0 +1,8 @@
+<launch>
+  
+ 
+
+  <param name="ur10e/robot_description" command="$(find xacro)/xacro $(find ur10e_description)/urdf/ur10e_temp.urdf" />
+
+
+</launch>
